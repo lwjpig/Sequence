@@ -1,70 +1,74 @@
 #include"Sequence.h"
 #include<iostream>
-#include<fstream>
 #include<string>
+#include<fstream>
+
 
 using namespace std;
 
-Sequence::Sequence(stringi filename)
+Sequence::Sequence(string filename)
 {
-file=filename;
 ifstream fin;
-fin.open(file.data());
-assert(fin.is_open());
-
-char a;
-while(fin>>a)
+fin.open(filename.data());
+string s;
+while(getline(fin,s))
 {
-int i=0;
-A[i]=a;
-i++;
+ dna+=s;
 }
 fin.close();
-number=i-1;
 }
 
 int Sequence::length()
 {
-for(int i=0;i<number;i++)
-{
-if(char A[i]=='\n')
-{
-length=number-1;
-}
-}
+int len=dna.length();
+cout<<len<<endl;
 return len;
 }
 
 int Sequence::numberOf(char base)
 {
-int a=0,T=0,C=0,G=0;
-for(int i=0;i<number;i++)
+int n=0;
+for(int i=0;i<dna.length();i++)
 {
-if(A[i]=='A')
-a++;
-else if(A[i]=='T')
-T++;
-else if(A[i]=='C')
-C++;
-else if(A[i]=='G')
-G++;
+ if(dna[i]==base)
+  n++;
 }
-if(base=='A')
-return a;
-else if(base=='T')
-return T;
-else if(base=='C')
-return C;
-else if(base=='G')
-return G;
+   cout<<n<<endl;
+   return n;
 }
+
+
 
 string Sequence::longestConsecutive()
 {
-
-}
-
-string Sequence::longestRepeated();
+int leng=dna.length();
+string lon;
+int most;
+int l=1;
+int max=1;
+for(int i=1;i<leng;i++)
 {
+ if(dna[i]==dna[i-1])
+  {
+    l++;
+     if(l>max)
+       {
+         most=dna[i];
+         max=l;
+       }
+  }
+ else
+   { 
+    l=1;
+   }
+} 
+for(int i=0;i<max;i++)
+  lon+=most;
+
+//cout<<max<<endl;
+cout<<lon<<endl;
+return lon;
 }
+
+//string Sequence::longestRepeated()
 
