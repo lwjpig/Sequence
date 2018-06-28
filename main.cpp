@@ -6,11 +6,12 @@ using namespace std;
 
 int main()
 {
-char A,C;
+
 Sequence Se("dna.txt");
-Se.length();
-Se.numberOf('C');
-Se.longestConsecutive();
+cout<<Se.length()<<endl;
+cout<<Se.numberOf('C')<<endl;
+cout<<Se.longestConsecutive()<<endl;
+cout<<Se.longestRepeated()<<endl;
 
 return 0;
 }
