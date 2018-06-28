@@ -12,7 +12,7 @@ class Sequence
      int length();
      int numberOf(char);
      string longestConsecutive();
-    // string longestRepeated();
+     string longestRepeated();
 
     private:
      string dna;
