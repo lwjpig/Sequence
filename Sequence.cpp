@@ -1,8 +1,10 @@
 #include"Sequence.h"
 #include<iostream>
 #include<string>
+#include<cstring>
+#include<string.h>
 #include<fstream>
-
+#include<algorithm>
 using namespace std;
 
 Sequence::Sequence(string filename)
@@ -66,23 +68,56 @@ string Sequence::longestConsecutive()
   return lon;
 }
 
-string Sequence::longestRepeated()//超时了
-{ 
-  string right,left;
-  int len=dna.length()/2;
-  for(len ; len>0; len--)
-   {  
-     for(int i=0; i<len; i++)
-      {
-        right=dna.substr(0,len+1);
-        left=dna.substr(len+1);
-        
-        if(left.find(right)!=-1)
-         return right;
-       }
-    }
-   cout<<right<<endl;
-   return NULL;   
+int com(const void *c,const void *d)
+{
+  int m=strcmp(*(char**)c,*(char**)d);
+  return m;
 }
- 
+
+int sort(char *c,char *d)
+{
+  int n=1;
+ for(int i=0;c!=NULL&&d!=NULL;i++)
+ {
+  if(*c==*d)
+   {
+    n++;
+    c++;
+    d++;
+   }
+  else
+    break;
+ }
+  return n;
+}
+char a[1500000], *b[1500000];
+
+string Sequence::longestRepeated()
+{ 
+  for(int i=0;i<dna.length();i++)
+   {
+    a[i]=dna[i];
+    b[i]=&a[i];
+   }
+  qsort(b,dna.length(),sizeof(char *),com);
+  int n=0;
+  int max=1;
+  int k=0;
+ for(int i=0;i<dna.length();i++)
+  {
+    n=sort(b[i],b[i+1]);
+    if(n>max)
+     {  
+      max=n;
+       k=i;
+     }
+  }
+  string lon;
+  for(int i=0;i<max;i++)
+    {
+      lon+=*b[k];
+      b[k]=b[k]+1;
+    }
+  return lon;
+}
 
